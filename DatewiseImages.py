@@ -38,7 +38,31 @@ def main(year,month,d,m_num):
 
     page_name.text = temp
     page_name.save('Creating or updating daily gallery for WLF 2022')
+    time.sleep(10)
+    page_datewise = pywikibot.Page(site,"User:Rockpeterson/WLF/Datewise")
 
+    page_txt = page_datewise.text
+    ls = page_txt.split("</br>")
+    print(ls)
+    new_ls=[]
+    for link in ls:
+        new_ls.append(link[2:len(link)-2])
+    print(new_ls)
+    print(page_name)
+
+    buff = str(page_name)
+    buff= buff[10:len(buff)-2]
+
+    if buff in new_ls:
+        return
+    page_datewise_text =""
+    for link in ls:
+        page_datewise_text= page_datewise_text+link+"</br>"
+
+    page_datewise_text=page_datewise_text+"[["+buff+"]]"
+
+    page_datewise.text=page_datewise_text
+    page_datewise.save("ok")
     
 
 if __name__ == '__main__':
